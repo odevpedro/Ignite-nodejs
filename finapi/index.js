@@ -9,6 +9,7 @@ const custumers = [];
  cpf - string | name - string | id - uuid | statement []
 */
 
+//Criando conta
 app.post("/account", (req, res) => {
     const { cpf, name } = req.body;
 
@@ -20,12 +21,26 @@ app.post("/account", (req, res) => {
     }
     
     custumers.push({
-        cpf, name, id:uuidv4(), statment: []
+        cpf, name, id:uuidv4(), statement: [],
         
     });
 
     return res.status(201).send();
     
 });
+
+//pegando extrato bancário
+app.get("/statement/:cpf", (req, res) => {
+    const { cpf } = req.params;
+
+    const customer = custumers.find(customer => customer.cpf === cpf );
+
+    if(!customer){
+        return res.status(400).json({error: "customer not found"})
+    }
+
+    return res.json(customer.statement);
+
+})
 
 app.listen(3333);
