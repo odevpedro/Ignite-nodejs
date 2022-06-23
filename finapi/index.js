@@ -30,8 +30,8 @@ app.post("/account", (req, res) => {
 });
 
 //pegando extrato bancário
-app.get("/statement/:cpf", (req, res) => {
-    const { cpf } = req.params;
+app.get("/statement", (req, res) => {
+    const { cpf } = req.headers;
 
     const customer = custumers.find(customer => customer.cpf === cpf );
 
